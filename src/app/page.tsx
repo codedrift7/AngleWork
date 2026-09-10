@@ -1,4 +1,5 @@
-﻿import Link from 'next/link'
+﻿import Image from 'next/image'
+import Link from 'next/link'
 
 export default function HomePage() {
   return (
@@ -6,8 +7,14 @@ export default function HomePage() {
       {/* Navigation */}
       <nav className="border-b-2 border-gray-200 bg-white py-4">
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-          <Link href="/" className="text-2xl font-bold text-gray-900">
-            Anglework
+          <Link href="/" className="flex items-center gap-2">
+            <Image 
+              src="/logo.svg" 
+              alt="Anglework" 
+              width={160} 
+              height={60}
+              priority
+            />
           </Link>
           <Link
             href="/campaign/new"
@@ -48,48 +55,57 @@ export default function HomePage() {
       </section>
 
       {/* How It Works Section */}
-      <section id="how-it-works" className="max-w-6xl mx-auto px-6 py-20 bg-gray-50">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">
-            How It Works
-          </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Three simple steps to a complete, ready-to-execute marketing campaign
-          </p>
-        </div>
-
-        <div className="grid md:grid-cols-3 gap-8">
-          <div className="relative p-8 rounded-2xl border-2 border-gray-200 bg-white hover:shadow-2xl hover:border-blue-500 transition-all">
-            <div className="text-5xl mb-4">📝</div>
-            <div className="absolute top-4 right-4 text-7xl font-bold text-gray-100">01</div>
-            <h3 className="text-2xl font-semibold text-gray-900 mb-3 relative z-10">
-              Product Brief
-            </h3>
-            <p className="text-gray-600 relative z-10">
-              Tell us about your product, target customer, and marketing goals
+      <section id="how-it-works" className="max-w-6xl mx-auto px-6 py-20 bg-gray-50 relative">
+        <div 
+          className="absolute inset-0 opacity-30" 
+          style={{
+            backgroundImage: 'radial-gradient(circle, #d1d5db 1px, transparent 1px)',
+            backgroundSize: '24px 24px'
+          }}
+        />
+        <div className="relative z-10">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">
+              How It Works
+            </h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Three simple steps to a complete, ready-to-execute marketing campaign
             </p>
           </div>
 
-          <div className="relative p-8 rounded-2xl border-2 border-gray-200 bg-white hover:shadow-2xl hover:border-blue-500 transition-all">
-            <div className="text-5xl mb-4">🤖</div>
-            <div className="absolute top-4 right-4 text-7xl font-bold text-gray-100">02</div>
-            <h3 className="text-2xl font-semibold text-gray-900 mb-3 relative z-10">
-              AI Pipeline
-            </h3>
-            <p className="text-gray-600 relative z-10">
-              6-stage AI system generates strategy, positioning, AIDA plan, and assets
-            </p>
-          </div>
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="relative p-8 rounded-2xl border-2 border-gray-200 bg-white hover:shadow-2xl hover:border-blue-500 transition-all">
+              <div className="text-5xl mb-4">📝</div>
+              <div className="absolute top-4 right-4 text-7xl font-bold text-gray-100">01</div>
+              <h3 className="text-2xl font-semibold text-gray-900 mb-3 relative z-10">
+                Product Brief
+              </h3>
+              <p className="text-gray-600 relative z-10">
+                Tell us about your product, target customer, and marketing goals
+              </p>
+            </div>
 
-          <div className="relative p-8 rounded-2xl border-2 border-gray-200 bg-white hover:shadow-2xl hover:border-blue-500 transition-all">
-            <div className="text-5xl mb-4">🚀</div>
-            <div className="absolute top-4 right-4 text-7xl font-bold text-gray-100">03</div>
-            <h3 className="text-2xl font-semibold text-gray-900 mb-3 relative z-10">
-              Ready Campaign
-            </h3>
-            <p className="text-gray-600 relative z-10">
-              Get LinkedIn posts, emails, landing page, ads, and a 7-day launch calendar
-            </p>
+            <div className="relative p-8 rounded-2xl border-2 border-gray-200 bg-white hover:shadow-2xl hover:border-blue-500 transition-all">
+              <div className="text-5xl mb-4">🤖</div>
+              <div className="absolute top-4 right-4 text-7xl font-bold text-gray-100">02</div>
+              <h3 className="text-2xl font-semibold text-gray-900 mb-3 relative z-10">
+                AI Pipeline
+              </h3>
+              <p className="text-gray-600 relative z-10">
+                6-stage AI system generates strategy, positioning, AIDA plan, and assets
+              </p>
+            </div>
+
+            <div className="relative p-8 rounded-2xl border-2 border-gray-200 bg-white hover:shadow-2xl hover:border-blue-500 transition-all">
+              <div className="text-5xl mb-4">🚀</div>
+              <div className="absolute top-4 right-4 text-7xl font-bold text-gray-100">03</div>
+              <h3 className="text-2xl font-semibold text-gray-900 mb-3 relative z-10">
+                Ready Campaign
+              </h3>
+              <p className="text-gray-600 relative z-10">
+                Get LinkedIn posts, emails, landing page, ads, and a 7-day launch calendar
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -150,25 +166,41 @@ export default function HomePage() {
 
       {/* CTA Section */}
       <section className="max-w-4xl mx-auto px-6 py-20 text-center">
-        <div className="p-12 rounded-3xl bg-gradient-to-br from-blue-50 to-purple-50 border-2 border-gray-200">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">
-            Ready to build your campaign?
-          </h2>
-          <p className="text-lg text-gray-600 mb-8">
-            Start with a product brief. Get a complete marketing campaign in minutes.
-          </p>
-          <Link
-            href="/campaign/new"
-            className="inline-block px-8 py-4 rounded-full bg-gray-900 text-white text-lg font-semibold hover:bg-gray-800"
-          >
-            Create Campaign →
-          </Link>
+        <div className="p-12 rounded-3xl bg-gradient-to-br from-blue-50 to-purple-50 border-2 border-gray-200 relative overflow-hidden">
+          <div 
+            className="absolute inset-0 opacity-20" 
+            style={{
+              backgroundImage: 'radial-gradient(circle, #a78bfa 1.5px, transparent 1.5px)',
+              backgroundSize: '28px 28px'
+            }}
+          />
+          <div className="relative z-10">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+              Ready to build your campaign?
+            </h2>
+            <p className="text-lg text-gray-600 mb-8">
+              Start with a product brief. Get a complete marketing campaign in minutes.
+            </p>
+            <Link
+              href="/campaign/new"
+              className="inline-block px-8 py-4 rounded-full bg-gray-900 text-white text-lg font-semibold hover:bg-gray-800"
+            >
+              Create Campaign →
+            </Link>
+          </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="border-t-2 border-gray-200 py-8 bg-gray-50">
-        <div className="max-w-6xl mx-auto px-6 text-center text-gray-600 text-sm">
+      <footer className="border-t-2 border-gray-200 py-8 bg-gray-50 relative">
+        <div 
+          className="absolute inset-0 opacity-20" 
+          style={{
+            backgroundImage: 'radial-gradient(circle, #9ca3af 1px, transparent 1px)',
+            backgroundSize: '20px 20px'
+          }}
+        />
+        <div className="max-w-6xl mx-auto px-6 text-center text-gray-600 text-sm relative z-10">
           © 2024 Anglework. AI-powered marketing campaigns.
         </div>
       </footer>
