@@ -7,8 +7,141 @@ datasource db {
   provider = "postgresql"
 }
 
+// User model (authentication - out of MVP scope, but included for future)
+model User {
+  id        String     @id @default(cuid())
+  email     String     @unique
+  createdAt DateTime   @default(now())
+  campaigns Campaign[]
+}
+
+// Campaign is the top-level entity grouping all pipeline outputs
 model Campaign {
-  id        String   @id @default(cuid())
+  id        String    @id @default(cuid())
+  userId    String?   // Nullable in MVP (no auth)
+  user      User?     @relation(fields: [userId], references: [id])
   name      String
-  createdAt DateTime @default(now())
+  status    String    // "draft" | "intelligence_complete" | "positioning_complete" | "aida_complete" | "assets_complete" | "critique_complete" | "complete"
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  productBrief ProductBrief?
+  strategy     Strategy?
+  assets       Asset[]
+  critique     Critique?
+  calendar     LaunchCalendar?
+}
+
+// ProductBrief stores the user-submitted form data
+model ProductBrief {
+  id                    String   @id @default(cuid())
+  campaignId            String   @unique
+  campaign              Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+
+  // Required fields
+  productName           String
+  description           String   @db.Text
+  category              String
+  productType           String
+  targetCustomer        String   @db.Text
+  customerProblem       String   @db.Text
+  customerSophistication String
+  mainBenefit           String   @db.Text
+  keyDifferentiator     String   @db.Text
+  price                 String
+  marketingGoal         String
+  launchType            String
+  desiredCTA            String
+  primaryChannel        String
+  campaignDuration      String
+
+  // Optional fields
+  competitors           String?  @db.Text
+  existingTagline       String?
+  brandVoice            String?  @db.Text
+  websiteURL            String?
+  customerTestimonials  String?  @db.Text // JSON array of testimonials
+  productDocs           String?  @db.Text
+  brandGuidelines       String?  @db.Text
+  existingCopy          String?  @db.Text
+
+  createdAt             DateTime @default(now())
+}
+
+// Strategy stores outputs from Product Analyst, Positioning Strategist, and AIDA Strategist
+model Strategy {
+  id                   String   @id @default(cuid())
+  campaignId           String   @unique
+  campaign             Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+
+  // Product Intelligence (from Product Analyst)
+  productIntelligence  Json     // ProductIntelligence type
+
+  // Positioning (from Positioning Strategist)
+  positioning          Json     // Positioning type
+
+  // Messaging Angles (3 candidates)
+  messagingAngles      Json     // MessagingAngle[] type
+
+  // Selected Messaging Angle index (0, 1, or 2)
+  selectedAngleIndex   Int?
+
+  // AIDA Strategy (from AIDA Strategist, generated after angle selection)
+  aidaStrategy         Json?    // AidaStrategy type
+
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+}
+
+// Asset stores each generated campaign piece
+model Asset {
+  id              String   @id @default(cuid())
+  campaignId      String
+  campaign        Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+
+  channel         String   // "linkedin" | "email" | "landing_page" | "ads"
+  stage           String   // "attention" | "interest" | "desire" | "action" | "multi-stage"
+  assetType       String   // "post" | "email" | "page_section" | "ad"
+  title           String?
+  content         Json     // Structured content (varies by asset type)
+  version         Int      @default(1)
+  manuallyEdited  Boolean  @default(false)
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([campaignId, channel, stage])
+}
+
+// Critique stores the Campaign Critic output
+model Critique {
+  id                    String   @id @default(cuid())
+  campaignId            String   @unique
+  campaign              Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+
+  overallScore          Float    // 0.0 - 10.0
+  attentionScore        Int      // 1 - 10
+  interestScore         Int      // 1 - 10
+  desireScore           Int      // 1 - 10
+  actionScore           Int      // 1 - 10
+  messageConsistency    Int      // 1 - 10
+  audienceFit           Int      // 1 - 10
+
+  criticalStage         String   // "attention" | "interest" | "desire" | "action"
+  findings              Json     // Array of finding objects
+  recommendations       Json     // Array of recommendation objects
+  primaryRecommendation Json     // Single recommendation object with fix instructions
+
+  createdAt             DateTime @default(now())
+}
+
+// LaunchCalendar stores the 7-day execution plan
+model LaunchCalendar {
+  id          String   @id @default(cuid())
+  campaignId  String   @unique
+  campaign    Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+
+  days        Json     // Array of day objects with date and actions
+
+  createdAt   DateTime @default(now())
 }

@@ -237,7 +237,7 @@ export async function runCampaignPipeline(
     console.log(`[Pipeline] Stage 2: Positioning Strategist - Starting`)
     await updateCampaignStatus(campaignId, 'positioning_in_progress')
 
-    // Call Positioning Strategist agent with 30-second timeout per Req 3.7
+    // Call Positioning Strategist agent with 120-second timeout per Req 3.7
     const positioningResult = await withTimeout(
       positioningStrategistAgent({
         data: { 
@@ -246,8 +246,8 @@ export async function runCampaignPipeline(
         },
         campaignId
       }),
-      30000, // 30 seconds
-      'Positioning Strategist agent exceeded 30 second timeout'
+      120000, // 120 seconds
+      'Positioning Strategist agent exceeded 120 second timeout'
     )
 
     // Create Strategy record with all required fields after both Stage 1 and Stage 2 complete

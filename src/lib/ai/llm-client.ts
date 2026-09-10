@@ -16,6 +16,8 @@ interface LLMCallOptions<T> {
   maxRetries?: number
   /** Maximum time allowed for each provider request. */
   requestTimeoutMs?: number
+  /** Maximum number of tokens the provider may generate. */
+  maxTokens?: number
 }
 
 /**
@@ -38,7 +40,8 @@ export async function callLLMWithStructuredOutput<T>(
     userPrompt,
     temperature = 0.7,
     maxRetries = 3,
-    requestTimeoutMs = 110000
+    requestTimeoutMs = 110000,
+    maxTokens
   } = options
 
   const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY
@@ -71,6 +74,7 @@ export async function callLLMWithStructuredOutput<T>(
             { role: 'user', content: userPrompt }
           ],
           temperature,
+          ...(maxTokens ? { max_tokens: maxTokens } : {}),
           response_format: { type: 'json_object' }
         })
       })

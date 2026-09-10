@@ -241,8 +241,9 @@ REMEMBER:
           : systemPrompt,
         userPrompt,
         temperature: 0.8,
-        maxRetries: 1 // Single attempt per outer retry to avoid nested timeouts
-        // Use default requestTimeoutMs (110 seconds) to allow LLM time to complete
+        maxRetries: 1, // Single attempt per outer retry to avoid nested timeouts
+        requestTimeoutMs: 115000,
+        maxTokens: 1600
       })
 
       return {
