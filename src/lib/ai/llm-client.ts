@@ -50,7 +50,7 @@ function getProviderConfig(provider: LLMProvider, modelOverride?: string): Provi
       }
       return {
         apiKey,
-        model: modelOverride || process.env.GROQ_MODEL || 'llama-3.3-70b-versatile',
+        model: modelOverride || process.env.GROQ_MODEL || 'openai/gpt-oss-120b',
         baseUrl: 'https://api.groq.com/openai/v1/chat/completions'
       }
     }

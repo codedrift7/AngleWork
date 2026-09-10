@@ -16,52 +16,52 @@ export interface AgentModelConfig {
 /**
  * Default model configurations for each pipeline agent.
  * 
- * Recommendations:
- * - Groq (llama-3.3-70b-versatile): Fast, good for structured tasks
- * - Groq (llama-3.1-70b-versatile): Alternative fast model
- * - OpenRouter (nvidia/nemotron): Free, good quality
- * - OpenRouter (google/gemini-2.0-flash-exp:free): Fast, free
+ * Using OpenAI GPT-OSS-120B via Groq (FREE):
+ * - 120 billion parameters
+ * - ~500 tokens/sec throughput
+ * - Built-in reasoning capabilities
+ * - FREE tier: 30 RPM, 1K RPD, 8K TPM, 200K TPD
  */
 export const AGENT_MODEL_CONFIG: Record<string, AgentModelConfig> = {
   // Stage 1: Product Intelligence Analysis
   productAnalyst: {
     provider: 'groq',
-    model: 'llama-3.3-70b-versatile',
+    model: 'openai/gpt-oss-120b',
     temperature: 0.7
   },
 
   // Stage 2: Positioning Strategy
   positioningStrategist: {
     provider: 'groq',
-    model: 'llama-3.3-70b-versatile',
+    model: 'openai/gpt-oss-120b',
     temperature: 0.8
   },
 
   // Stage 3: AIDA Strategy
   aidaStrategist: {
     provider: 'groq',
-    model: 'llama-3.3-70b-versatile',
+    model: 'openai/gpt-oss-120b',
     temperature: 0.7
   },
 
   // Stage 4: Campaign Asset Generation
   campaignBuilder: {
     provider: 'groq',
-    model: 'llama-3.3-70b-versatile',
+    model: 'openai/gpt-oss-120b',
     temperature: 0.9 // Higher creativity for content generation
   },
 
   // Stage 5: Campaign Critique
   campaignCritic: {
     provider: 'groq',
-    model: 'llama-3.3-70b-versatile',
+    model: 'openai/gpt-oss-120b',
     temperature: 0.6 // Lower for analytical tasks
   },
 
   // Stage 6: Launch Calendar
   launchCalendar: {
     provider: 'groq',
-    model: 'llama-3.3-70b-versatile',
+    model: 'openai/gpt-oss-120b',
     temperature: 0.5 // Structured output
   }
 }
@@ -72,7 +72,7 @@ export const AGENT_MODEL_CONFIG: Record<string, AgentModelConfig> = {
 export function getAgentModelConfig(agentName: string): AgentModelConfig {
   return AGENT_MODEL_CONFIG[agentName] || {
     provider: 'groq',
-    model: 'llama-3.3-70b-versatile',
+    model: 'openai/gpt-oss-120b',
     temperature: 0.7
   }
 }
@@ -92,13 +92,22 @@ export function mergeModelConfig(
 }
 
 /**
- * Available Groq models
+ * Available Groq models (FREE tier)
  */
 export const GROQ_MODELS = {
-  LLAMA_3_3_70B: 'llama-3.3-70b-versatile',
-  LLAMA_3_1_70B: 'llama-3.1-70b-versatile',
-  MIXTRAL_8X7B: 'mixtral-8x7b-32768',
-  GEMMA_2_9B: 'gemma2-9b-it'
+  // OpenAI GPT-OSS Models (FREE, recommended)
+  GPT_OSS_120B: 'openai/gpt-oss-120b',      // 120B params, ~500 tok/s, reasoning
+  GPT_OSS_20B: 'openai/gpt-oss-20b',        // 20B params, ~1000 tok/s, fast
+  
+  // Qwen Models (FREE)
+  QWEN_3_8_27B: 'qwen/qwen3.8-27b',         // 27B params, good quality
+  QWEN_3_6_27B: 'qwen/qwen3.6-27b',         // 27B params, alternative
+  
+  // Compound AI Models (FREE, with tool orchestration)
+  COMPOUND: 'groq/compound',                 // Multi-agent system
+  COMPOUND_MINI: 'groq/compound-mini',       // Lightweight multi-agent
+  
+  // Note: Llama models are NOT free anymore, avoid using them
 } as const
 
 /**
