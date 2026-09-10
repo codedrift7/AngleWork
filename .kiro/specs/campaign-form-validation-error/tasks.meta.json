@@ -1,0 +1,84 @@
+{
+  "pbtResults": {},
+  "executionHistory": {
+    "1. Write bug condition exploration test": [
+      {
+        "executionId": "49c01b21-11ea-462c-b9b6-d5016c26ac88",
+        "chatSessionId": "sess_8f189aa2-31eb-45e7-ab66-f594b55329ba",
+        "timestamp": 1788605082538
+      },
+      {
+        "executionId": "f4ee1144-dbb6-4a02-80af-099cead4e310",
+        "chatSessionId": "sess_a0f80cda-1c45-4142-b410-db0d31d6c81e",
+        "timestamp": 1788606828032
+      },
+      {
+        "executionId": "f4ee1144-dbb6-4a02-80af-099cead4e310",
+        "chatSessionId": "sess_a0f80cda-1c45-4142-b410-db0d31d6c81e",
+        "timestamp": 1788606963930
+      }
+    ],
+    "2. Write preservation property tests (BEFORE implementing fix)": [
+      {
+        "executionId": "e3642b87-b451-4b51-86e6-236d0c419a44",
+        "chatSessionId": "sess_83f4ae4b-01db-41b2-9578-c867e18e5550",
+        "timestamp": 1788610226441
+      },
+      {
+        "executionId": "e3642b87-b451-4b51-86e6-236d0c419a44",
+        "chatSessionId": "sess_83f4ae4b-01db-41b2-9578-c867e18e5550",
+        "timestamp": 1788610774067
+      }
+    ],
+    "3.1 Replace inline form implementation at page.tsx": [
+      {
+        "executionId": "c8270143-4a59-4b14-b1ad-cd2226d85127",
+        "chatSessionId": "sess_be44523b-47c5-4114-bd7b-69d2cf081fe2",
+        "timestamp": 1788610855188
+      },
+      {
+        "executionId": "c8270143-4a59-4b14-b1ad-cd2226d85127",
+        "chatSessionId": "sess_be44523b-47c5-4114-bd7b-69d2cf081fe2",
+        "timestamp": 1788611133504
+      }
+    ],
+    "3.2 Verify bug condition exploration test now passes": [
+      {
+        "executionId": "c8270143-4a59-4b14-b1ad-cd2226d85127",
+        "chatSessionId": "sess_be44523b-47c5-4114-bd7b-69d2cf081fe2",
+        "timestamp": 1788611140529
+      },
+      {
+        "executionId": "c8270143-4a59-4b14-b1ad-cd2226d85127",
+        "chatSessionId": "sess_be44523b-47c5-4114-bd7b-69d2cf081fe2",
+        "timestamp": 1788611239318
+      }
+    ],
+    "3.3 Verify preservation tests still pass": [
+      {
+        "executionId": "c8270143-4a59-4b14-b1ad-cd2226d85127",
+        "chatSessionId": "sess_be44523b-47c5-4114-bd7b-69d2cf081fe2",
+        "timestamp": 1788611245046
+      },
+      {
+        "executionId": "c8270143-4a59-4b14-b1ad-cd2226d85127",
+        "chatSessionId": "sess_be44523b-47c5-4114-bd7b-69d2cf081fe2",
+        "timestamp": 1788611907708
+      }
+    ],
+    "3. Replace inline form with MultiStepCampaignForm component": [
+      {
+        "executionId": "c8270143-4a59-4b14-b1ad-cd2226d85127",
+        "chatSessionId": "sess_be44523b-47c5-4114-bd7b-69d2cf081fe2",
+        "timestamp": 1788611907868
+      }
+    ],
+    "4. Checkpoint - Ensure all tests pass": [
+      {
+        "executionId": "8402bfa2-0a78-45b9-8b68-fe2087c9e95c",
+        "chatSessionId": "sess_f2c33908-fec2-4064-bed2-ac6dc4c7f0cb",
+        "timestamp": 1788612241651
+      }
+    ]
+  }
+}

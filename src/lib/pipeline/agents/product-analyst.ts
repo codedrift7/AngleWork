@@ -18,7 +18,8 @@
  */
 
 import { callLLMWithStructuredOutput, withTimeout } from '@/lib/ai/llm-client'
-import { ProductIntelligence, ProductIntelligenceSchema, ProductBriefData } from '@/lib/types/campaign'
+import { getAgentModelConfig } from '@/lib/ai/model-config'
+import { ProductBriefData, ProductIntelligence, ProductIntelligenceSchema } from '@/lib/types/campaign'
 
 export interface ProductAnalystInput {
   data: ProductBriefData
@@ -123,13 +124,18 @@ Extract the following in valid JSON format:
 8. objections - What concerns would prevent the customer from buying? (2-5 realistic objections)
 9. recommendedMessagingAngle - Which messaging angle would work best: "pain", "outcome", or "time"?`
 
+  // Get model configuration for this agent
+  const modelConfig = getAgentModelConfig('productAnalyst')
+
   // Wrap the LLM call with a 30-second timeout per Req 2.8
   const agentCall = callLLMWithStructuredOutput<ProductIntelligence>({
     schema: ProductIntelligenceSchema,
     systemPrompt,
     userPrompt,
-    temperature: 0.7,
-    maxRetries: 3
+    temperature: modelConfig.temperature,
+    maxRetries: 3,
+    provider: modelConfig.provider,
+    model: modelConfig.model
   })
 
   // LLM-based competitive intelligence typically takes 45-90 seconds

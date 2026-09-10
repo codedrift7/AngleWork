@@ -1,0 +1,444 @@
+{
+  "pbtResults": {},
+  "executionHistory": {
+    "1.1 Set up TypeScript types and Zod schemas for all data models": [
+      {
+        "executionId": "7dfc04d9-159e-4b52-9747-01d199dd1589",
+        "chatSessionId": "sess_0cdf6137-2b99-40b9-a4a3-acc91a44d8cb",
+        "timestamp": 1788199166493
+      },
+      {
+        "executionId": "7dfc04d9-159e-4b52-9747-01d199dd1589",
+        "chatSessionId": "sess_0cdf6137-2b99-40b9-a4a3-acc91a44d8cb",
+        "timestamp": 1788199921999
+      }
+    ],
+    "1.2 Implement OpenRouter LLM client with structured output support": [
+      {
+        "executionId": "7dfc04d9-159e-4b52-9747-01d199dd1589",
+        "chatSessionId": "sess_0cdf6137-2b99-40b9-a4a3-acc91a44d8cb",
+        "timestamp": 1788199167744
+      },
+      {
+        "executionId": "7dfc04d9-159e-4b52-9747-01d199dd1589",
+        "chatSessionId": "sess_0cdf6137-2b99-40b9-a4a3-acc91a44d8cb",
+        "timestamp": 1788199922869
+      }
+    ],
+    "1.3 Expand Prisma schema with complete database models": [
+      {
+        "executionId": "7dfc04d9-159e-4b52-9747-01d199dd1589",
+        "chatSessionId": "sess_0cdf6137-2b99-40b9-a4a3-acc91a44d8cb",
+        "timestamp": 1788199929127
+      },
+      {
+        "executionId": "7dfc04d9-159e-4b52-9747-01d199dd1589",
+        "chatSessionId": "sess_0cdf6137-2b99-40b9-a4a3-acc91a44d8cb",
+        "timestamp": 1788200209079
+      }
+    ],
+    "1. Foundation: Core infrastructure and shared utilities": [
+      {
+        "executionId": "7dfc04d9-159e-4b52-9747-01d199dd1589",
+        "chatSessionId": "sess_0cdf6137-2b99-40b9-a4a3-acc91a44d8cb",
+        "timestamp": 1788200209243
+      }
+    ],
+    "2.1 Create ProductBriefForm component with validation": [
+      {
+        "executionId": "11555f1d-df72-46bd-94ab-26b5839039f0",
+        "chatSessionId": "sess_897a151a-e206-4da7-af84-a3f339004502",
+        "timestamp": 1788200263205
+      },
+      {
+        "executionId": "11555f1d-df72-46bd-94ab-26b5839039f0",
+        "chatSessionId": "sess_897a151a-e206-4da7-af84-a3f339004502",
+        "timestamp": 1788200932219
+      }
+    ],
+    "2.3 Create pipeline orchestrator foundation": [
+      {
+        "executionId": "11555f1d-df72-46bd-94ab-26b5839039f0",
+        "chatSessionId": "sess_897a151a-e206-4da7-af84-a3f339004502",
+        "timestamp": 1788200263924
+      },
+      {
+        "executionId": "11555f1d-df72-46bd-94ab-26b5839039f0",
+        "chatSessionId": "sess_897a151a-e206-4da7-af84-a3f339004502",
+        "timestamp": 1788200932688
+      }
+    ],
+    "2.2 Implement createCampaignFromBrief server action": [
+      {
+        "executionId": "11555f1d-df72-46bd-94ab-26b5839039f0",
+        "chatSessionId": "sess_897a151a-e206-4da7-af84-a3f339004502",
+        "timestamp": 1788200937402
+      },
+      {
+        "executionId": "6a8810e3-eea3-4563-a456-7e0ef07cc903",
+        "chatSessionId": "sess_897a151a-e206-4da7-af84-a3f339004502",
+        "timestamp": 1788201940735
+      }
+    ],
+    "2. Priority 1: Product Onboarding (Requirements 1.1-1.9)": [
+      {
+        "executionId": "6a8810e3-eea3-4563-a456-7e0ef07cc903",
+        "chatSessionId": "sess_897a151a-e206-4da7-af84-a3f339004502",
+        "timestamp": 1788201941073
+      }
+    ],
+    "3.1 Implement Product Analyst AI agent": [
+      {
+        "executionId": "1267e12f-dd54-4325-830f-25ec8fc8ddb5",
+        "chatSessionId": "sess_2f33b571-be46-435e-b5b2-8fb688dae865",
+        "timestamp": 1788202109142
+      },
+      {
+        "executionId": "1267e12f-dd54-4325-830f-25ec8fc8ddb5",
+        "chatSessionId": "sess_2f33b571-be46-435e-b5b2-8fb688dae865",
+        "timestamp": 1788203076064
+      }
+    ],
+    "3.3 Create ProductIntelligenceCard component": [
+      {
+        "executionId": "1267e12f-dd54-4325-830f-25ec8fc8ddb5",
+        "chatSessionId": "sess_2f33b571-be46-435e-b5b2-8fb688dae865",
+        "timestamp": 1788202110190
+      },
+      {
+        "executionId": "1267e12f-dd54-4325-830f-25ec8fc8ddb5",
+        "chatSessionId": "sess_2f33b571-be46-435e-b5b2-8fb688dae865",
+        "timestamp": 1788203076933
+      }
+    ],
+    "3.2 Integrate Product Analyst into pipeline orchestrator": [
+      {
+        "executionId": "1267e12f-dd54-4325-830f-25ec8fc8ddb5",
+        "chatSessionId": "sess_2f33b571-be46-435e-b5b2-8fb688dae865",
+        "timestamp": 1788203082490
+      }
+    ],
+    "4.1 Implement Positioning Strategist AI agent": [
+      {
+        "executionId": "72eae96a-2610-47eb-b474-ae01f38085ee",
+        "chatSessionId": "sess_26129f07-b6c2-404c-8991-d95ebffa32fb",
+        "timestamp": 1788203999096
+      },
+      {
+        "executionId": "72eae96a-2610-47eb-b474-ae01f38085ee",
+        "chatSessionId": "sess_26129f07-b6c2-404c-8991-d95ebffa32fb",
+        "timestamp": 1788204836411
+      }
+    ],
+    "4.3 Create PositioningStrategySelector component": [
+      {
+        "executionId": "72eae96a-2610-47eb-b474-ae01f38085ee",
+        "chatSessionId": "sess_26129f07-b6c2-404c-8991-d95ebffa32fb",
+        "timestamp": 1788203999774
+      },
+      {
+        "executionId": "72eae96a-2610-47eb-b474-ae01f38085ee",
+        "chatSessionId": "sess_26129f07-b6c2-404c-8991-d95ebffa32fb",
+        "timestamp": 1788204837309
+      }
+    ],
+    "4.2 Integrate Positioning Strategist into pipeline orchestrator": [
+      {
+        "executionId": "72eae96a-2610-47eb-b474-ae01f38085ee",
+        "chatSessionId": "sess_26129f07-b6c2-404c-8991-d95ebffa32fb",
+        "timestamp": 1788204843115
+      },
+      {
+        "executionId": "c0b40ec4-8fdf-4119-8e85-efb6b2dbb701",
+        "chatSessionId": "sess_56079940-16da-46dd-a46d-b51c2e36903f",
+        "timestamp": 1788206670919
+      },
+      {
+        "executionId": "c0b40ec4-8fdf-4119-8e85-efb6b2dbb701",
+        "chatSessionId": "sess_56079940-16da-46dd-a46d-b51c2e36903f",
+        "timestamp": 1788206858370
+      }
+    ],
+    "4.4 Implement selectMessagingAngle server action": [
+      {
+        "executionId": "72eae96a-2610-47eb-b474-ae01f38085ee",
+        "chatSessionId": "sess_26129f07-b6c2-404c-8991-d95ebffa32fb",
+        "timestamp": 1788204843849
+      },
+      {
+        "executionId": "054b8fba-1a81-4279-a355-84dc7347e67e",
+        "chatSessionId": "sess_b0c02861-c4c7-443a-ad9e-88a4e2bc614d",
+        "timestamp": 1788206879300
+      },
+      {
+        "executionId": "054b8fba-1a81-4279-a355-84dc7347e67e",
+        "chatSessionId": "sess_b0c02861-c4c7-443a-ad9e-88a4e2bc614d",
+        "timestamp": 1788207682961
+      }
+    ],
+    "4. Priority 3: Positioning Strategy (Requirements 3.1-3.7)": [
+      {
+        "executionId": "054b8fba-1a81-4279-a355-84dc7347e67e",
+        "chatSessionId": "sess_b0c02861-c4c7-443a-ad9e-88a4e2bc614d",
+        "timestamp": 1788207683294
+      }
+    ],
+    "5.1 Implement AIDA Strategist AI agent": [
+      {
+        "executionId": "bfbea4a4-30b2-4e98-b30e-f217c19b0a83",
+        "chatSessionId": "sess_2da0690b-25ca-4cf9-abc0-49ffba97fa43",
+        "timestamp": 1788207758047
+      }
+    ],
+    "5.2 Integrate AIDA Strategist into pipeline orchestrator": [
+      {
+        "executionId": "a784b99c-3a2f-4fed-bfae-5e6029094893",
+        "chatSessionId": "sess_c75fe93f-0e26-4be7-af5c-d36f1f704d21",
+        "timestamp": 1788209183751
+      },
+      {
+        "executionId": "264aa396-4e1c-4a6f-ae57-0848380601ca",
+        "chatSessionId": "sess_c75fe93f-0e26-4be7-af5c-d36f1f704d21",
+        "timestamp": 1788210476145
+      }
+    ],
+    "5.3 Create AidaStrategyDisplay component": [
+      {
+        "executionId": "8c99e5d3-f557-425f-9d5c-c73d3154dd5d",
+        "chatSessionId": "sess_f1768af8-76c0-4f57-b8b0-f9c8d33aa2b7",
+        "timestamp": 1788210607457
+      },
+      {
+        "executionId": "8c99e5d3-f557-425f-9d5c-c73d3154dd5d",
+        "chatSessionId": "sess_f1768af8-76c0-4f57-b8b0-f9c8d33aa2b7",
+        "timestamp": 1788211049978
+      }
+    ],
+    "5. Priority 4: AIDA Strategy (Requirements 4.1-4.9)": [
+      {
+        "executionId": "8c99e5d3-f557-425f-9d5c-c73d3154dd5d",
+        "chatSessionId": "sess_f1768af8-76c0-4f57-b8b0-f9c8d33aa2b7",
+        "timestamp": 1788211050167
+      }
+    ],
+    "6.1 Implement Campaign Builder AI agent for LinkedIn posts": [
+      {
+        "executionId": "4797d874-2fad-441e-bbe9-6d074d62811b",
+        "chatSessionId": "sess_7f110756-fcc8-4eb5-8c09-df689839dc9d",
+        "timestamp": 1788215813303
+      },
+      {
+        "executionId": "1e03abd0-d60a-4c64-b8ea-a5bed602ed3a",
+        "chatSessionId": "sess_1239dca3-1504-4523-8342-45c050b49a34",
+        "timestamp": 1788239578555
+      },
+      {
+        "executionId": "1e03abd0-d60a-4c64-b8ea-a5bed602ed3a",
+        "chatSessionId": "sess_1239dca3-1504-4523-8342-45c050b49a34",
+        "timestamp": 1788239735761
+      }
+    ],
+    "6. Priority 5: Campaign Builder - LinkedIn Assets (Requirements 5.1-5.2)": [
+      {
+        "executionId": "1e03abd0-d60a-4c64-b8ea-a5bed602ed3a",
+        "chatSessionId": "sess_1239dca3-1504-4523-8342-45c050b49a34",
+        "timestamp": 1788239735904
+      }
+    ],
+    "7.1 Extend Campaign Builder agent for emails": [
+      {
+        "executionId": "21a2396a-61e7-470c-983a-501a0adeddfd",
+        "chatSessionId": "sess_376c77d5-b10a-4a0b-b068-60d1cf8fa838",
+        "timestamp": 1788239776334
+      },
+      {
+        "executionId": "21a2396a-61e7-470c-983a-501a0adeddfd",
+        "chatSessionId": "sess_376c77d5-b10a-4a0b-b068-60d1cf8fa838",
+        "timestamp": 1788240758698
+      }
+    ],
+    "7. Priority 5: Campaign Builder - Email Assets (Requirements 5.1, 5.3)": [
+      {
+        "executionId": "21a2396a-61e7-470c-983a-501a0adeddfd",
+        "chatSessionId": "sess_376c77d5-b10a-4a0b-b068-60d1cf8fa838",
+        "timestamp": 1788240758818
+      }
+    ],
+    "8.1 Extend Campaign Builder agent for landing page": [
+      {
+        "executionId": "602f033c-8e8d-4c23-b339-10a95f49f648",
+        "chatSessionId": "sess_26901d68-31a4-451d-a76e-361d27756b95",
+        "timestamp": 1788241299031
+      }
+    ],
+    "9.1 Extend Campaign Builder agent for ads": [
+      {
+        "executionId": "c4b76b78-16f7-469b-9905-b9f71f07140c",
+        "chatSessionId": "sess_383044c3-10b7-4119-9c60-adbef252e8f5",
+        "timestamp": 1788242128716
+      },
+      {
+        "executionId": "c4b76b78-16f7-469b-9905-b9f71f07140c",
+        "chatSessionId": "sess_383044c3-10b7-4119-9c60-adbef252e8f5",
+        "timestamp": 1788242785076
+      }
+    ],
+    "9.2 Integrate Campaign Builder into pipeline orchestrator": [
+      {
+        "executionId": "c4b76b78-16f7-469b-9905-b9f71f07140c",
+        "chatSessionId": "sess_383044c3-10b7-4119-9c60-adbef252e8f5",
+        "timestamp": 1788242129284
+      },
+      {
+        "executionId": "c4b76b78-16f7-469b-9905-b9f71f07140c",
+        "chatSessionId": "sess_383044c3-10b7-4119-9c60-adbef252e8f5",
+        "timestamp": 1788242785756
+      }
+    ],
+    "9.3 Create AssetDisplay components for all channels": [
+      {
+        "executionId": "c4b76b78-16f7-469b-9905-b9f71f07140c",
+        "chatSessionId": "sess_383044c3-10b7-4119-9c60-adbef252e8f5",
+        "timestamp": 1788242129851
+      },
+      {
+        "executionId": "c4b76b78-16f7-469b-9905-b9f71f07140c",
+        "chatSessionId": "sess_383044c3-10b7-4119-9c60-adbef252e8f5",
+        "timestamp": 1788242786422
+      }
+    ],
+    "9. Priority 5: Campaign Builder - Ad Assets (Requirements 5.1, 5.5)": [
+      {
+        "executionId": "c4b76b78-16f7-469b-9905-b9f71f07140c",
+        "chatSessionId": "sess_383044c3-10b7-4119-9c60-adbef252e8f5",
+        "timestamp": 1788242786627
+      }
+    ],
+    "10.1 Implement Campaign Critic AI agent": [
+      {
+        "executionId": "7ea927ff-cfdd-48e1-822b-e56d5d5005f8",
+        "chatSessionId": "sess_25168900-1fcd-48f4-901b-2a293b4d0501",
+        "timestamp": 1788242973975
+      },
+      {
+        "executionId": "7ea927ff-cfdd-48e1-822b-e56d5d5005f8",
+        "chatSessionId": "sess_25168900-1fcd-48f4-901b-2a293b4d0501",
+        "timestamp": 1788243628282
+      }
+    ],
+    "10.2 Integrate Campaign Critic into pipeline orchestrator": [
+      {
+        "executionId": "7ea927ff-cfdd-48e1-822b-e56d5d5005f8",
+        "chatSessionId": "sess_25168900-1fcd-48f4-901b-2a293b4d0501",
+        "timestamp": 1788243633978
+      }
+    ],
+    "10.4 Create CampaignCritiquePanel component": [
+      {
+        "executionId": "7ea927ff-cfdd-48e1-822b-e56d5d5005f8",
+        "chatSessionId": "sess_25168900-1fcd-48f4-901b-2a293b4d0501",
+        "timestamp": 1788243634531
+      }
+    ],
+    "11.1 Implement Launch Calendar Generator AI agent": [
+      {
+        "executionId": "f4708169-2ec2-4205-a1e5-142fa8ed1417",
+        "chatSessionId": "sess_c40f2076-3463-4c7d-a7a5-f58d90487b0e",
+        "timestamp": 1788248907935
+      },
+      {
+        "executionId": "f4708169-2ec2-4205-a1e5-142fa8ed1417",
+        "chatSessionId": "sess_c40f2076-3463-4c7d-a7a5-f58d90487b0e",
+        "timestamp": 1788250074389
+      }
+    ],
+    "11.2 Integrate Launch Calendar Generator into pipeline orchestrator": [
+      {
+        "executionId": "f4708169-2ec2-4205-a1e5-142fa8ed1417",
+        "chatSessionId": "sess_c40f2076-3463-4c7d-a7a5-f58d90487b0e",
+        "timestamp": 1788250079541
+      },
+      {
+        "executionId": "f4708169-2ec2-4205-a1e5-142fa8ed1417",
+        "chatSessionId": "sess_c40f2076-3463-4c7d-a7a5-f58d90487b0e",
+        "timestamp": 1788250818160
+      }
+    ],
+    "11.3 Create LaunchCalendarDisplay component": [
+      {
+        "executionId": "f4708169-2ec2-4205-a1e5-142fa8ed1417",
+        "chatSessionId": "sess_c40f2076-3463-4c7d-a7a5-f58d90487b0e",
+        "timestamp": 1788250080506
+      },
+      {
+        "executionId": "f4708169-2ec2-4205-a1e5-142fa8ed1417",
+        "chatSessionId": "sess_c40f2076-3463-4c7d-a7a5-f58d90487b0e",
+        "timestamp": 1788250818700
+      }
+    ],
+    "11. Priority 7: Launch Calendar (Requirements 7.1-7.8)": [
+      {
+        "executionId": "f4708169-2ec2-4205-a1e5-142fa8ed1417",
+        "chatSessionId": "sess_c40f2076-3463-4c7d-a7a5-f58d90487b0e",
+        "timestamp": 1788250818866
+      }
+    ],
+    "12.1 Create Campaign Dashboard page with complete data fetching": [
+      {
+        "executionId": "b0e4c313-d09d-41b7-9763-f0b82e448983",
+        "chatSessionId": "sess_fc5f34d7-68bf-482b-a52b-b1efeea2bddf",
+        "timestamp": 1788258129728
+      },
+      {
+        "executionId": "b0e4c313-d09d-41b7-9763-f0b82e448983",
+        "chatSessionId": "sess_fc5f34d7-68bf-482b-a52b-b1efeea2bddf",
+        "timestamp": 1788258136104
+      }
+    ],
+    "12.2 Build Campaign Dashboard layout with all sections": [
+      {
+        "executionId": "b0e4c313-d09d-41b7-9763-f0b82e448983",
+        "chatSessionId": "sess_fc5f34d7-68bf-482b-a52b-b1efeea2bddf",
+        "timestamp": 1788258129990
+      }
+    ],
+    "12.3 Implement AssetEditor component with inline editing": [
+      {
+        "executionId": "b0e4c313-d09d-41b7-9763-f0b82e448983",
+        "chatSessionId": "sess_fc5f34d7-68bf-482b-a52b-b1efeea2bddf",
+        "timestamp": 1788258130293
+      }
+    ],
+    "12.4 Implement updateAsset server action with manual edit tracking": [
+      {
+        "executionId": "b0e4c313-d09d-41b7-9763-f0b82e448983",
+        "chatSessionId": "sess_fc5f34d7-68bf-482b-a52b-b1efeea2bddf",
+        "timestamp": 1788258130472
+      }
+    ],
+    "12.5 Implement navigation flow from landing to dashboard": [
+      {
+        "executionId": "b0e4c313-d09d-41b7-9763-f0b82e448983",
+        "chatSessionId": "sess_fc5f34d7-68bf-482b-a52b-b1efeea2bddf",
+        "timestamp": 1788258130779
+      }
+    ],
+    "13. Checkpoint: End-to-end pipeline verification": [
+      {
+        "executionId": "b0e4c313-d09d-41b7-9763-f0b82e448983",
+        "chatSessionId": "sess_fc5f34d7-68bf-482b-a52b-b1efeea2bddf",
+        "timestamp": 1788258130961
+      },
+      {
+        "executionId": "c1eba32f-1b85-4172-a778-ea9221a201ec",
+        "chatSessionId": "sess_50a272e0-3884-4183-8a7c-a48feb735a39",
+        "timestamp": 1788266447950
+      },
+      {
+        "executionId": "c1eba32f-1b85-4172-a778-ea9221a201ec",
+        "chatSessionId": "sess_50a272e0-3884-4183-8a7c-a48feb735a39",
+        "timestamp": 1788266798227
+      }
+    ]
+  }
+}

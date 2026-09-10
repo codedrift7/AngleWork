@@ -1,0 +1,81 @@
+# Implementation Plan
+
+- [x] 1. Write bug condition exploration test
+  - **Property 1: Bug Condition** - Incorrect Redirect Syntax Detection
+  - **CRITICAL**: This test MUST FAIL on unfixed code - failure confirms the bug exists
+  - **DO NOT attempt to fix the test or the code when it fails**
+  - **NOTE**: This test encodes the expected behavior - it will validate the fix when it passes after implementation
+  - **GOAL**: Surface counterexamples that demonstrate the bug exists
+  - **Scoped PBT Approach**: For this deterministic syntax bug, scope the property to the concrete failing case at line 211
+  - Test that line 211 of `src/actions/campaign.ts` uses backtick syntax instead of parentheses
+  - Verify the redirect call matches pattern `redirect\`/campaign/${campaign.id}\`` (buggy syntax)
+  - Test that successful campaign creation triggers NEXT_REDIRECT error being caught by catch block
+  - The test assertions should match the Expected Behavior Properties from design (correct parenthesis syntax)
+  - Run test on UNFIXED code
+  - **EXPECTED OUTCOME**: Test FAILS (this is correct - it proves the bug exists)
+  - Document counterexamples found:
+    - Line 211 contains backtick syntax instead of parentheses
+    - NEXT_REDIRECT is caught and re-thrown (though it still works, it creates unnecessary catch block entry)
+  - Mark task complete when test is written, run, and failure is documented
+  - _Requirements: 1.1, 1.2_
+
+- [ ] 2. Write preservation property tests (BEFORE implementing fix)
+  - **Property 2: Preservation** - Error Handling Unchanged
+  - **IMPORTANT**: Follow observation-first methodology
+  - Observe behavior on UNFIXED code for non-redirect error scenarios:
+    - Zod validation errors return structured field-specific error messages
+    - Database errors return appropriate error responses
+    - Non-redirect errors (without digest property) return error messages
+    - Campaign and ProductBrief creation succeed before redirect
+  - Write property-based tests capturing observed error handling patterns from Preservation Requirements:
+    - Test 1: Zod validation errors produce structured responses (requirement 3.1)
+    - Test 2: Non-redirect errors return appropriate error messages (requirement 3.2)
+    - Test 3: Redirect destination pattern `/campaign/${campaignId}` remains unchanged (requirement 3.3)
+    - Test 4: Campaign/ProductBrief records are created successfully (requirement 3.4)
+  - Property-based testing generates many test cases for stronger guarantees
+  - Run tests on UNFIXED code
+  - **EXPECTED OUTCOME**: Tests PASS (this confirms baseline behavior to preserve)
+  - Mark task complete when tests are written, run, and passing on unfixed code
+  - _Requirements: 3.1, 3.2, 3.3, 3.4_
+
+- [ ] 3. Fix for NEXT_REDIRECT syntax error
+
+  - [ ] 3.1 Implement the fix
+    - Open `src/actions/campaign.ts`
+    - Navigate to line 211
+    - Replace backtick syntax: `redirect\`/campaign/${campaign.id}\`` 
+    - With correct parenthesis syntax: `redirect(\`/campaign/${campaign.id}\`)`
+    - Verify no other changes are needed (existing error handling at lines 232-235 already correctly detects and re-throws NEXT_REDIRECT via digest property check)
+    - _Bug_Condition: isBugCondition(input) where input.syntax == "backtick" AND input.functionName == "redirect" AND input.lineNumber == 211_
+    - _Expected_Behavior: redirect uses parenthesis syntax, throws NEXT_REDIRECT, is caught and re-thrown without logging_
+    - _Preservation: Zod validation errors (3.1), non-redirect errors (3.2), redirect destination pattern (3.3), and campaign creation (3.4) remain unchanged_
+    - _Requirements: 1.1, 1.2, 2.1, 2.2, 3.1, 3.2, 3.3, 3.4_
+
+  - [ ] 3.2 Verify bug condition exploration test now passes
+    - **Property 1: Expected Behavior** - Correct Redirect Syntax
+    - **IMPORTANT**: Re-run the SAME test from task 1 - do NOT write a new test
+    - The test from task 1 encodes the expected behavior (parenthesis syntax)
+    - When this test passes, it confirms line 211 uses correct syntax
+    - Run bug condition exploration test from step 1
+    - Verify line 211 now uses `redirect(\`/campaign/${campaign.id}\`)` (parentheses)
+    - Verify successful campaign creation properly throws and re-throws NEXT_REDIRECT
+    - **EXPECTED OUTCOME**: Test PASSES (confirms bug is fixed)
+    - _Requirements: Expected Behavior Properties from design (2.1, 2.2)_
+
+  - [ ] 3.3 Verify preservation tests still pass
+    - **Property 2: Preservation** - Error Handling Unchanged
+    - **IMPORTANT**: Re-run the SAME tests from task 2 - do NOT write new tests
+    - Run preservation property tests from step 2
+    - Verify Zod validation errors still produce structured responses
+    - Verify non-redirect errors still return appropriate messages
+    - Verify redirect destination pattern unchanged
+    - Verify campaign/ProductBrief creation still works
+    - **EXPECTED OUTCOME**: Tests PASS (confirms no regressions)
+    - Confirm all tests still pass after fix (no regressions)
+
+- [ ] 4. Checkpoint - Ensure all tests pass
+  - Run all tests for the `createCampaignFromBrief` function
+  - Verify bug condition test passes (correct syntax at line 211)
+  - Verify all preservation tests pass (no regressions in error handling)
+  - Verify no NEXT_REDIRECT errors are logged during successful campaign creation
+  - If any issues arise, ask the user for guidance

@@ -1,6 +1,20 @@
 import { z } from 'zod'
 
 /**
+ * Supported LLM providers
+ */
+export type LLMProvider = 'openrouter' | 'groq'
+
+/**
+ * Provider-specific configuration
+ */
+interface ProviderConfig {
+  apiKey: string
+  model: string
+  baseUrl: string
+}
+
+/**
  * Options for calling the LLM with structured output validation
  */
 interface LLMCallOptions<T> {
@@ -18,13 +32,51 @@ interface LLMCallOptions<T> {
   requestTimeoutMs?: number
   /** Maximum number of tokens the provider may generate. */
   maxTokens?: number
+  /** LLM provider to use. Default: from env or 'groq' */
+  provider?: LLMProvider
+  /** Specific model to use (overrides env defaults) */
+  model?: string
 }
 
 /**
- * Call OpenRouter API with structured JSON output and Zod validation.
+ * Get provider configuration based on provider type
+ */
+function getProviderConfig(provider: LLMProvider, modelOverride?: string): ProviderConfig {
+  switch (provider) {
+    case 'groq': {
+      const apiKey = process.env.GROQ_API_KEY
+      if (!apiKey) {
+        throw new Error('GROQ_API_KEY environment variable is not set')
+      }
+      return {
+        apiKey,
+        model: modelOverride || process.env.GROQ_MODEL || 'llama-3.3-70b-versatile',
+        baseUrl: 'https://api.groq.com/openai/v1/chat/completions'
+      }
+    }
+    case 'openrouter': {
+      const apiKey = process.env.OPENROUTER_API_KEY
+      if (!apiKey) {
+        throw new Error('OPENROUTER_API_KEY environment variable is not set')
+      }
+      return {
+        apiKey,
+        model: modelOverride || process.env.OPENROUTER_MODEL || 'nvidia/nemotron-3-super-120b-a12b:free',
+        baseUrl: 'https://openrouter.ai/api/v1/chat/completions'
+      }
+    }
+    default:
+      throw new Error(`Unknown provider: ${provider}`)
+  }
+}
+
+/**
+ * Call LLM API with structured JSON output and Zod validation.
+ * 
+ * Supports multiple providers (Groq, OpenRouter) with automatic fallback.
  * 
  * This function:
- * - Sends requests to OpenRouter with JSON mode enabled
+ * - Sends requests to the configured LLM provider with JSON mode enabled
  * - Validates responses against the provided Zod schema
  * - Retries on failure with exponential backoff
  * - Returns typed, validated data
@@ -33,7 +85,7 @@ interface LLMCallOptions<T> {
  */
 export async function callLLMWithStructuredOutput<T>(
   options: LLMCallOptions<T>
-): Promise<T & { tokensUsed?: number }> {
+): Promise<T & { tokensUsed?: number; provider?: LLMProvider }> {
   const {
     schema,
     systemPrompt,
@@ -41,15 +93,14 @@ export async function callLLMWithStructuredOutput<T>(
     temperature = 0.7,
     maxRetries = 3,
     requestTimeoutMs = 110000,
-    maxTokens
+    maxTokens,
+    provider = (process.env.LLM_PROVIDER as LLMProvider) || 'groq',
+    model
   } = options
 
-  const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY
-  const OPENROUTER_MODEL = process.env.OPENROUTER_MODEL || 'nvidia/nemotron-3-super-120b-a12b:free'
-
-  if (!OPENROUTER_API_KEY) {
-    throw new Error('OPENROUTER_API_KEY environment variable is not set')
-  }
+  const providerConfig = getProviderConfig(provider, model)
+  
+  console.log(`[LLM] Using ${provider} with model ${providerConfig.model}`)
 
   let lastError: Error | null = null
   
@@ -58,37 +109,47 @@ export async function callLLMWithStructuredOutput<T>(
     const requestTimeout = setTimeout(() => controller.abort(), requestTimeoutMs)
 
     try {
-      const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+      const headers: Record<string, string> = {
+        'Authorization': `Bearer ${providerConfig.apiKey}`,
+        'Content-Type': 'application/json'
+      }
+
+      // Add OpenRouter-specific headers
+      if (provider === 'openrouter') {
+        headers['HTTP-Referer'] = process.env.NEXTAUTH_URL || 'https://anglework.vercel.app'
+        headers['X-Title'] = 'Anglework'
+      }
+
+      const requestBody: any = {
+        model: providerConfig.model,
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: userPrompt }
+        ],
+        temperature,
+        ...(maxTokens ? { max_tokens: maxTokens } : {})
+      }
+
+      // Both Groq and OpenRouter support response_format for JSON mode
+      requestBody.response_format = { type: 'json_object' }
+
+      const response = await fetch(providerConfig.baseUrl, {
         method: 'POST',
         signal: controller.signal,
-        headers: {
-          'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
-          'Content-Type': 'application/json',
-          'HTTP-Referer': process.env.NEXTAUTH_URL || 'https://anglework.vercel.app',
-          'X-Title': 'Anglework'
-        },
-        body: JSON.stringify({
-          model: OPENROUTER_MODEL,
-          messages: [
-            { role: 'system', content: systemPrompt },
-            { role: 'user', content: userPrompt }
-          ],
-          temperature,
-          ...(maxTokens ? { max_tokens: maxTokens } : {}),
-          response_format: { type: 'json_object' }
-        })
+        headers,
+        body: JSON.stringify(requestBody)
       })
 
       if (!response.ok) {
         const errorText = await response.text()
-        throw new Error(`OpenRouter API error: ${response.status} ${errorText}`)
+        throw new Error(`${provider} API error: ${response.status} ${errorText}`)
       }
 
       const completion = await response.json()
       const content = completion.choices?.[0]?.message?.content
       
       if (!content) {
-        throw new Error('Empty response from OpenRouter API')
+        throw new Error(`Empty response from ${provider} API`)
       }
 
       // Parse JSON response
@@ -99,26 +160,32 @@ export async function callLLMWithStructuredOutput<T>(
       
       return {
         ...validated,
-        tokensUsed: completion.usage?.total_tokens
+        tokensUsed: completion.usage?.total_tokens,
+        provider
       }
 
     } catch (error) {
       lastError = error instanceof Error ? error : new Error('Unknown error')
+      
+      // Check for network/abort errors that should trigger immediate retry
+      const isNetworkError = lastError.message.includes('aborted') || 
+                            lastError.message.includes('network') ||
+                            lastError.message.includes('fetch')
       
       // Enhanced error logging for Zod validation failures
       if (error instanceof z.ZodError) {
         const validationDetails = error.issues.map(issue => 
           `  - ${issue.path.join('.')}: ${issue.message}`
         ).join('\n')
-        console.error(`LLM call attempt ${attempt + 1} - Zod validation failed:\n${validationDetails}`)
+        console.error(`[${provider}] Attempt ${attempt + 1} - Zod validation failed:\n${validationDetails}`)
         lastError = new Error(`ZodError: Validation failed:\n${validationDetails}`)
       } else {
-        console.error(`LLM call attempt ${attempt + 1} failed:`, lastError.message)
+        console.error(`[${provider}] Attempt ${attempt + 1} failed:`, lastError.message)
       }
       
       // Exponential backoff: 1s, 2s, 4s
       if (attempt < maxRetries - 1) {
-        const delayMs = Math.pow(2, attempt) * 1000
+        const delayMs = isNetworkError ? 500 : Math.pow(2, attempt) * 1000
         console.log(`Retrying in ${delayMs}ms...`)
         await new Promise(resolve => setTimeout(resolve, delayMs))
       }
@@ -127,7 +194,7 @@ export async function callLLMWithStructuredOutput<T>(
     }
   }
 
-  throw new Error(`LLM call failed after ${maxRetries} attempts: ${lastError?.message}`)
+  throw new Error(`[${provider}] LLM call failed after ${maxRetries} attempts: ${lastError?.message}`)
 }
 
 /**

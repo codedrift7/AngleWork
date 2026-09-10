@@ -1,0 +1,94 @@
+# Implementation Plan
+
+- [x] 1. Write bug condition exploration test
+  - **Property 1: Bug Condition** - Inline Form Architecture and Missing Optional Fields
+  - **CRITICAL**: This test MUST FAIL on unfixed code - failure confirms the bug exists
+  - **DO NOT attempt to fix the test or the code when it fails**
+  - **NOTE**: This test encodes the expected behavior - it will validate the fix when it passes after implementation
+  - **GOAL**: Surface counterexamples that demonstrate the architectural mismatch
+  - **Scoped PBT Approach**: Verify the concrete failing case where page.tsx uses inline form instead of MultiStepCampaignForm component
+  - Test implementation details from Bug Condition in design:
+    - Verify `/campaign/new/page.tsx` contains inline form implementation (not `<MultiStepCampaignForm />`)
+    - Verify inline form state only initializes 15 required fields (missing 8 optional fields)
+    - Verify Step 4 renders review screen instead of `<Step4Optional />` component
+    - Verify `MultiStepCampaignForm.tsx` exists with all 23 fields properly implemented
+    - Simulate form submission and verify FormData only contains 15 fields
+  - Run test on UNFIXED code
+  - **EXPECTED OUTCOME**: Test FAILS (this is correct - it proves the bug exists)
+  - Document counterexamples found:
+    - page.tsx uses inline form with only 15 fields in state
+    - Step 4 displays summary review instead of optional field inputs
+    - FormData submitted contains only 15 entries (missing 8 optional fields)
+    - MultiStepCampaignForm component exists but is unused
+  - Mark task complete when test is written, run, and failure is documented
+  - _Requirements: 1.1, 1.2, 1.3, 2.1_
+
+- [x] 2. Write preservation property tests (BEFORE implementing fix)
+  - **Property 2: Preservation** - Required Field Validation and Successful Submissions
+  - **IMPORTANT**: Follow observation-first methodology
+  - Observe behavior on UNFIXED code for non-buggy inputs:
+    - Form submissions with all required fields succeed
+    - Campaign creation redirects to `/campaign/[id]`
+    - Client-side validation prevents submission with missing required fields
+    - Navigation between form steps preserves entered values
+    - Valid data is processed and stored correctly in database
+  - Write property-based tests capturing observed behavior patterns from Preservation Requirements:
+    - For all form submissions with valid required fields, campaign creation succeeds
+    - For all navigation actions between steps, form state is preserved
+    - For all valid data combinations, database records are created correctly
+    - For all validation errors on required fields, appropriate error messages appear
+  - Property-based testing generates many test cases for stronger guarantees
+  - Run tests on UNFIXED code (inline form implementation)
+  - **EXPECTED OUTCOME**: Tests PASS (this confirms baseline behavior to preserve)
+  - Mark task complete when tests are written, run, and passing on unfixed code
+  - _Requirements: 3.1, 3.2, 3.3, 3.4, 3.5, 3.6_
+
+- [x] 3. Replace inline form with MultiStepCampaignForm component
+
+  - [x] 3.1 Replace inline form implementation at page.tsx
+    - Open `src/app/campaign/new/page.tsx`
+    - Remove entire inline form implementation (~250 lines including state, validation, step rendering, navigation)
+    - Import MultiStepCampaignForm: `import { MultiStepCampaignForm } from '@/components/campaign-form/MultiStepCampaignForm'`
+    - Replace page component with: `export default function NewCampaignPage() { return <MultiStepCampaignForm /> }`
+    - Verify the component swap is complete and no inline form code remains
+    - _Bug_Condition: isBugCondition(input) where page.tsx uses inline form with 15 fields instead of MultiStepCampaignForm with 23 fields_
+    - _Expected_Behavior: page.tsx renders MultiStepCampaignForm component which properly handles all 23 fields and Step 4 optional inputs_
+    - _Preservation: All required field validation, navigation, state management, and successful submission flows from design_
+    - _Requirements: 2.1, 2.2, 2.3, 2.4, 3.1, 3.2, 3.3, 3.4, 3.5, 3.6_
+
+  - [x] 3.2 Verify bug condition exploration test now passes
+    - **Property 1: Expected Behavior** - MultiStepCampaignForm Architecture with All Fields
+    - **IMPORTANT**: Re-run the SAME test from task 1 - do NOT write a new test
+    - The test from task 1 encodes the expected behavior
+    - When this test passes, it confirms the expected behavior is satisfied
+    - Run bug condition exploration test from step 1
+    - **EXPECTED OUTCOME**: Test PASSES (confirms bug is fixed)
+    - Verify page.tsx now renders `<MultiStepCampaignForm />` component
+    - Verify form state contains all 23 fields
+    - Verify Step 4 renders `<Step4Optional />` with optional field inputs
+    - Verify FormData submitted contains all 23 fields
+    - _Requirements: Expected Behavior Properties from design (2.1, 2.2, 2.3, 2.4)_
+
+  - [x] 3.3 Verify preservation tests still pass
+    - **Property 2: Preservation** - Required Field Validation and Successful Submissions
+    - **IMPORTANT**: Re-run the SAME tests from task 2 - do NOT write new tests
+    - Run preservation property tests from step 2
+    - **EXPECTED OUTCOME**: Tests PASS (confirms no regressions)
+    - Confirm campaign creation with valid required fields still works
+    - Confirm required field validation unchanged
+    - Confirm navigation and state management unchanged
+    - Confirm database operations unchanged
+    - Confirm redirect behavior unchanged
+
+- [x] 4. Checkpoint - Ensure all tests pass
+  - Ensure all tests pass, ask the user if questions arise.
+  - Verify end-to-end flow:
+    - `/campaign/new` page uses MultiStepCampaignForm component
+    - Step 4 displays optional field inputs (not review screen)
+    - Form collects all 23 fields (15 required + 8 optional)
+    - Empty optional fields are submitted as empty strings
+    - Campaign creation succeeds with only required fields filled
+    - Campaign creation succeeds with optional fields filled
+    - Required field validation continues to work
+    - Successful submissions redirect to `/campaign/[id]`
+    - Navigation and form state preservation work correctly

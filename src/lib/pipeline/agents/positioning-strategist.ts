@@ -20,6 +20,7 @@
  */
 
 import { callLLMWithStructuredOutput } from '@/lib/ai/llm-client'
+import { getAgentModelConfig } from '@/lib/ai/model-config'
 import {
     PositioningOutput,
     PositioningOutputSchema,
@@ -228,6 +229,9 @@ REMEMBER:
 - Keep text UNDER the character limits - these are CHARACTER limits, not word counts
 - BOTH "positioning" and "messagingAngles" are REQUIRED in your response`
 
+  // Get model configuration for this agent
+  const modelConfig = getAgentModelConfig('positioningStrategist')
+
   // Call LLM with improved error handling for validation failures
   let lastValidationError: string | null = null
   const maxRetries = 3
@@ -240,10 +244,12 @@ REMEMBER:
           ? `${systemPrompt}\n\nPREVIOUS ATTEMPT FAILED VALIDATION:\n${lastValidationError}\n\nPlease correct these issues in your response.`
           : systemPrompt,
         userPrompt,
-        temperature: 0.8,
+        temperature: modelConfig.temperature,
         maxRetries: 1, // Single attempt per outer retry to avoid nested timeouts
         requestTimeoutMs: 115000,
-        maxTokens: 1600
+        maxTokens: 1600,
+        provider: modelConfig.provider,
+        model: modelConfig.model
       })
 
       return {
@@ -251,7 +257,7 @@ REMEMBER:
         metadata: {
           tokensUsed: result.tokensUsed || 0,
           executionTimeMs: Date.now() - startTime,
-          modelVersion: process.env.OPENROUTER_MODEL || 'nvidia/nemotron-3-super-120b-a12b:free'
+          modelVersion: `${modelConfig.provider}/${modelConfig.model}`
         }
       }
     } catch (error) {
