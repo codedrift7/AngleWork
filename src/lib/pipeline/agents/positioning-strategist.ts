@@ -241,8 +241,8 @@ REMEMBER:
           : systemPrompt,
         userPrompt,
         temperature: 0.8,
-        maxRetries: 1, // Single attempt per outer retry to avoid nested timeouts
-        requestTimeoutMs: 25000
+        maxRetries: 1 // Single attempt per outer retry to avoid nested timeouts
+        // Use default requestTimeoutMs (110 seconds) to allow LLM time to complete
       })
 
       return {
@@ -266,6 +266,23 @@ REMEMBER:
           continue
         }
       }
+      
+      // For network/abort errors, also retry
+      if (error instanceof Error && (
+        error.message.includes('aborted') || 
+        error.message.includes('network') ||
+        error.message.includes('ECONNRESET')
+      )) {
+        console.error(`[Positioning Strategist] Network error (attempt ${attempt + 1}/${maxRetries}):`, error.message)
+        
+        if (attempt < maxRetries - 1) {
+          const delayMs = Math.pow(2, attempt) * 1000
+          console.log(`[Positioning Strategist] Retrying after network error in ${delayMs}ms...`)
+          await new Promise(resolve => setTimeout(resolve, delayMs))
+          continue
+        }
+      }
+      
       throw error
     }
   }
